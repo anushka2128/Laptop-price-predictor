@@ -33,7 +33,7 @@ os = st.selectbox('OS', data['OpSys'].unique())
 
 # weight of laptop
 
-weight = st.number_input('Weight of the laptop')
+weight = st.number_input('Weight of the laptop (in kg)', value=1.5, min_value=0.1)
 
 # touchscreen available in laptop or not
 
@@ -45,7 +45,7 @@ ips = st.selectbox('IPS', ['No', 'Yes'])
 
 # screen size
 
-screen_size = st.number_input('Screen Size')
+screen_size = st.number_input('Screen Size (in inches)', value=15.6, min_value=1.0)
 
 # resolution of laptop
 
