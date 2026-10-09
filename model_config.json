@@ -1,0 +1,83 @@
+{
+  "winner_model": "Random Forest Regressor",
+  "input_features": [
+    "Company",
+    "TypeName",
+    "Ram",
+    "OpSys",
+    "Weight",
+    "Touchscreen",
+    "IPS",
+    "PPI",
+    "Cpu_Brand",
+    "HDD",
+    "SSD",
+    "Gpu_Brand"
+  ],
+  "companies": [
+    "Acer",
+    "Apple",
+    "Asus",
+    "Chuwi",
+    "Dell",
+    "Fujitsu",
+    "Google",
+    "HP",
+    "Huawei",
+    "LG",
+    "Lenovo",
+    "MSI",
+    "Mediacom",
+    "Microsoft",
+    "Razer",
+    "Samsung",
+    "Toshiba",
+    "Vero",
+    "Xiaomi"
+  ],
+  "types": [
+    "2 in 1 Convertible",
+    "Gaming",
+    "Netbook",
+    "Notebook",
+    "Ultrabook",
+    "Workstation"
+  ],
+  "ram_options": [
+    2,
+    4,
+    6,
+    8,
+    12,
+    16,
+    24,
+    32,
+    64
+  ],
+  "os_options": [
+    "Mac",
+    "Others/No OS/Linux",
+    "Windows"
+  ],
+  "cpu_brands": [
+    "AMD Processor",
+    "Intel Core i3",
+    "Intel Core i5",
+    "Intel Core i7",
+    "Other Intel Processor"
+  ],
+  "gpu_brands": [
+    "AMD",
+    "Intel",
+    "Nvidia"
+  ],
+  "defaults": {
+    "Ram": 8,
+    "Weight": 2.04,
+    "Touchscreen": 0,
+    "IPS": 0,
+    "PPI": 141.21199808219862,
+    "HDD": 0,
+    "SSD": 256
+  }
+}

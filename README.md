@@ -27,7 +27,7 @@ An interactive Machine Learning web application powered by **Streamlit** and **S
 
 - **⚡ Real-Time Price Estimation**: Instantly calculates expected price ranges (₹) based on user selections.
 - **🎯 Advanced Feature Engineering**: Automatically derives display metrics like **PPI (Pixels Per Inch)** from resolution and screen size.
-- **🌲 Ensemble ML Model**: Employs a fine-tuned **Random Forest Regressor** trained on log-transformed laptop pricing data.
+- **🌲 Multi-Model Training Pipeline**: Compares **Ridge Regression**, **Random Forest Regressor** ($R^2 \approx 0.884$), and **XGBoost**.
 - **🎨 Interactive Streamlit UI**: User-friendly web interface with dropdowns, sliders, and numerical inputs.
 - **🛡️ Robust Input Handling**: Pre-populated dynamically with trained dataset attributes (brands, processors, OS, GPU models).
 
@@ -39,8 +39,8 @@ An interactive Machine Learning web application powered by **Streamlit** and **S
 flowchart TD
     A["💻 User Inputs (Specs & Features)"] --> B["⚙️ Feature Engineering (PPI Calculation)"]
     B --> C["📋 Query Vector Transformation"]
-    C --> D["🔤 ColumnTransformer (OneHotEncoder)"]
-    D --> E["🌲 RandomForestRegressor (max_depth=15)"]
+    C --> D["🔤 ColumnTransformer (OneHotEncoder + StandardScaler)"]
+    D --> E["🌲 RandomForestRegressor (max_depth=15, R²=0.884)"]
     E --> F["📈 Log-Price Prediction"]
     F --> G["🔄 Exponentiation: np.exp(y_pred)"]
     G --> H["💰 Final Estimated Price Range (₹)"]
@@ -50,8 +50,9 @@ flowchart TD
 <summary><b>🔍 View Model Pipeline Details</b></summary>
 
 - **Target Transformation**: The model was trained on `log(Price)` to reduce variance and mitigate skewness in laptop pricing distribution.
-- **Encoder**: `OneHotEncoder(drop='first', sparse_output=False)` handles categorical variables: `Brand`, `TypeName`, `CPU_name`, `Gpu brand`, `OpSys`.
-- **Regressor**: `RandomForestRegressor(max_depth=15, max_features=0.75, max_samples=0.5, random_state=3)`.
+- **Encoder**: `OneHotEncoder(drop='first', sparse_output=False)` handles categorical variables: `Company`, `TypeName`, `Cpu_Brand`, `Gpu_Brand`, `OpSys`.
+- **Scaler**: `StandardScaler()` normalizes numeric specifications (`Ram`, `Weight`, `PPI`, `Touchscreen`, `IPS`, `HDD`, `SSD`).
+- **Regressor**: `RandomForestRegressor(max_depth=15, max_features=0.75, max_samples=0.5, random_state=42)`.
 </details>
 
 ---
@@ -69,12 +70,13 @@ $$\text{PPI} = \frac{\sqrt{X_{\text{res}}^2 + Y_{\text{res}}^2}}{\text{Screen Si
 ```
 Laptop-price-predictor/
 │-- app.py                        # Streamlit Web Application Interface
+│-- train.py                      # Google Colab / Local ML Training Pipeline
 │-- pipe.pkl                      # Trained ML Model Pipeline (Encoder + RandomForest)
+│-- laptop_price_model.pkl        # Exported Model Pipeline from train.py
+│-- model_config.json             # Configuration & feature metadata JSON
 │-- traineddata.csv               # Processed dataset reference for UI options
 │-- laptop_data.csv               # Raw laptop dataset
 │-- Laptop Price Predictor.ipynb  # EDA, Data Cleaning & Model Training Notebook
-│-- df.pkl                        # Processed DataFrame pickle
-│-- laptoppricepredictor.pkl      # Lightweight model checkpoint
 │-- requirements.txt              # Project Python dependencies
 │-- .gitignore                    # Git tracking exemptions
 └── README.md                     # Interactive Project Documentation
@@ -126,7 +128,12 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-### 4️⃣ Launch Streamlit Application
+### 4️⃣ Train the Model (Google Colab / Local)
+```bash
+python train.py
+```
+
+### 5️⃣ Launch Streamlit Application
 ```bash
 streamlit run app.py
 ```
@@ -153,7 +160,7 @@ streamlit run app.py
 - **Machine Learning**: [Scikit-Learn](https://scikit-learn.org/), [XGBoost](https://xgboost.readthedocs.io/)
 - **Data Processing**: [Pandas](https://pandas.pydata.org/), [NumPy](https://numpy.org/)
 - **Visualization**: [Matplotlib](https://matplotlib.org/), [Seaborn](https://seaborn.pydata.org/)
-- **Environment**: Python 3.9+
+- **Environment**: Python 3.9+ / Google Colab
 
 ---
 
